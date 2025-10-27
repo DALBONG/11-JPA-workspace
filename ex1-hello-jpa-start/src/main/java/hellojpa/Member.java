@@ -1,25 +1,30 @@
 package hellojpa;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-// @Table(name = "MEMBER_TB") //클래스 명과 테이블 명이 다를 때, 이렇게 써줌
+@SequenceGenerator(
+        name = "MEM_SEQ_GENERATOR",
+        sequenceName = "seq_mem", //매핑할 데이터베이스 시퀀스 이름
+        initialValue = 1, allocationSize = 50)
+// @Table(uniqueConstraints = "") 유니크 제약조건과 함게 제약조건 명 설정할떄
+// @Table(name = "MEMBER_TB") //클래스 명과 테이블 명이 다를 때, naem ="tb명" 을 명시적으로 써줌
 public class Member {
 
-    @Id //PK
-    private Long id;
-    // @Column(name = "userName") // 컬럼명 또한 다른 컬럼명으로 하고싶다면 이렇게
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator = "MEM_SEQ_GENERATOR")
+    private  Long id;
 
-    public Member(){}
+    @Column(name = "name", nullable = false)
+    private String username;
 
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    public Member () {}
 
     public Long getId() {
         return id;
@@ -29,12 +34,14 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
 }
+
+
+

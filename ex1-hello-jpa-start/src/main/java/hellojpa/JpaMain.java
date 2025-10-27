@@ -20,15 +20,30 @@ public class JpaMain {
 
         try{
 
-            Member member = em.find(Member.class, 21L);
-            member.setName("update21L");
+            Member member1 = new Member();
+            member1.setUsername("Auser");
 
-            em.clear();
+            Member member2 = new Member();
+            member2.setUsername("Buser");
 
-            Member member2 = em.find(Member.class, 21L);
+            Member member3 = new Member();
+            member3.setUsername("Cuser");
 
-            System.out.println("======================");
+            System.out.println("=========================");
 
+            // DB Seq = 1
+            // DB seq = 51 / 2
+            // DB seq = 101 / 3
+
+            em.persist(member1); // 영속
+            em.persist(member2);
+            em.persist(member3);
+
+            System.out.println("member 1 :" + member1.getId() );
+            System.out.println("member 2 :" + member2.getId() );
+            System.out.println("member 3 :" + member3.getId() );
+
+            System.out.println("=========================");
 
             ts.commit();
         }catch (Exception e){
