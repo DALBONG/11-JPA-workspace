@@ -20,13 +20,16 @@ public class JpaMain {
 
         try{
 
-            Order order = em.find(Order.class, 1L);
-            Long memberId = order.getMemberId();
+            // 슈더 코드
+            Order order = new Order();
+            // order.addOrderItem(new OrderItem()); // altEnter로 연관 관계 편의 메소드 생성
 
-            Member member = em.find(Member.class, memberId);
+            em.persist(order);
 
-            Member orderMember = order.getMember();
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
 
+            em.persist(orderItem);
 
             ts.commit();
         }catch (Exception e){
