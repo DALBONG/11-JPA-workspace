@@ -20,16 +20,11 @@ public class JpaMain {
 
         try{
 
-            // 슈더 코드
-            Order order = new Order();
-            // order.addOrderItem(new OrderItem()); // altEnter로 연관 관계 편의 메소드 생성
+            Book book = new Book();
+            book.setName("JPA의 정석");
+            book.setAuthor("정봉열");
 
-            em.persist(order);
-
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
-
-            em.persist(orderItem);
+            em.persist(book);
 
             ts.commit();
         }catch (Exception e){
