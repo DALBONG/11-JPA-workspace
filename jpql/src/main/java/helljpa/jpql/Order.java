@@ -1,23 +1,25 @@
-package jpabook.jpashop.domain;
+package helljpa.jpql;
 
 import jakarta.persistence.*;
 
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
-public class Delivery extends BaseEntity{
+@Table(name = "ORDERS")
+public class Order {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @OneToOne(mappedBy = "delivery", fetch = LAZY)
-    private Order order;
+    private int orderAmount;
 
     @Embedded
     private Address address;
 
-    private DeliveryStatus status;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "PRODUCT_ID")
+    private Product product;
 
     public Long getId() {
         return id;
@@ -27,12 +29,12 @@ public class Delivery extends BaseEntity{
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
+    public int getOrderAmount() {
+        return orderAmount;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderAmount(int orderAmount) {
+        this.orderAmount = orderAmount;
     }
 
     public Address getAddress() {
@@ -43,11 +45,11 @@ public class Delivery extends BaseEntity{
         this.address = address;
     }
 
-    public DeliveryStatus getStatus() {
-        return status;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setStatus(DeliveryStatus status) {
-        this.status = status;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

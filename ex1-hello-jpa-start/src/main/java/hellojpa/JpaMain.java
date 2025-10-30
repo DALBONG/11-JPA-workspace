@@ -1,6 +1,9 @@
 package hellojpa;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
@@ -22,22 +25,18 @@ public class JpaMain {
 
         try{
 
-            Child child1 = new Child();
-            Child child2 = new Child();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Member> query = cb.createQuery((Member.class));
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
+            Root<Member> m = query.from(Member.class);
 
-            em.persist(parent);
-            em.persist(child1);
-            em.persist(child2);
+            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+            List<Member> resultList = em.createQuery(cq).getResultList();
 
-            em.flush();
-            em.clear();
+            for(Member mem : resultList){
+                System.out.println("member : " + mem);
+            }
 
-            Parent findParent = em.find(Parent.class, parent.getId());
-            em.remove(findParent);
 
 
             ts.commit();
