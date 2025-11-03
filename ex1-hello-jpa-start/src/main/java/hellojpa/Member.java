@@ -32,6 +32,10 @@ public class Member extends BaseEntity {
     @Column(name = "FOOD_NAME")
     private Set<String> favoriteFoods = new HashSet<>();
 
+    @JoinColumn(name = "TEAM_ID")
+    @ManyToOne
+    private Team team;
+
 //    @ElementCollection
 //    @CollectionTable(name = "ADDRESS",
 //                joinColumns = @JoinColumn(name = "MEMBER_ID"))
@@ -78,6 +82,14 @@ public class Member extends BaseEntity {
 
     public void setAddressHistory(List<AddressEntity> addressHistory) {
         this.addressHistory = addressHistory;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
 

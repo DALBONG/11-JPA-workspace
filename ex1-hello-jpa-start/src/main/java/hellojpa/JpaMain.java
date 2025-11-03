@@ -5,6 +5,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Hibernate;
+import org.hibernate.property.access.internal.PropertyAccessStrategyNoopImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,18 +26,37 @@ public class JpaMain {
 
         try{
 
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery((Member.class));
 
-            Root<Member> m = query.from(Member.class);
 
-            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
-            List<Member> resultList = em.createQuery(cq).getResultList();
+            Team team1 = new Team();
+            team1.setName("팀A");
+            em.persist(team1);
 
-            for(Member mem : resultList){
-                System.out.println("member : " + mem);
+            Team team2 = new Team();
+            team2.setName("팀B");
+            em.persist(team2);
+
+            Member member1 = new Member();
+            member1.setUsername("dalbong");
+            member1.setTeam(team1);
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("bongbong");
+            member2.setTeam(team1);
+            em.persist(member2);
+
+            Member member3 = new Member();
+            member3.setUsername("bongdal");
+            member3.setTeam(team2);
+            em.persist(member3);
+
+            String query = "select from Member m ";
+            List<Member> result = em.createQuery(query, Member.class).getResultList();
+
+            for (Member mem : result) {
+                System.out.printf("member : " + mem);
             }
-
 
 
             ts.commit();

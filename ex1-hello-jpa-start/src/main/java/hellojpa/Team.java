@@ -19,11 +19,7 @@ public class Team extends BaseEntity{
     // mappedBy : '무엇'으로 부터 매핑된 것인지 알려줌
     @OneToMany
     @JoinColumn(name = "TEAM_ID")
-    private List<Member> members = new ArrayList<>();
-
-    // 연관 관계 편의 메소드
-
-    public Team () {}
+    private Member members = new Member();
 
     public Long getId() {
         return id;
@@ -31,14 +27,6 @@ public class Team extends BaseEntity{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<Member> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<Member> members) {
-        this.members = members;
     }
 
     public String getName() {
@@ -49,4 +37,11 @@ public class Team extends BaseEntity{
         this.name = name;
     }
 
+    public Member getMembers() {
+        return members;
+    }
+
+    public void setMembers(Member members) {
+        this.members = members;
+    }
 }
