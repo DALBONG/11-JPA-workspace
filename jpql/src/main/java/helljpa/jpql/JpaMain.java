@@ -22,17 +22,39 @@ public class JpaMain {
         ts.begin();
 
         try{
+            Team teamA = new Team();
+            teamA.setName("팀1");
+            em.persist(teamA);
 
-            Member member = new Member();
-            member.setUsername("userA");
-            member.setAge(22);
-            em.persist(member);
+            Team teamB = new Team();
+            teamB.setName("팀2");
+            em.persist(teamB);
 
-            Member singleResult = em.createQuery("select m from Member m where m.username = :username", Member.class)
-                    .setParameter("username", "userA")
-                    .getSingleResult();
+            Member member1 = new Member();
+            member1.setUsername("회원1");
+            member1.setTeam(teamA);
+            em.persist(member1);
 
-            System.out.println(singleResult);
+            Member member2 = new Member();
+            member2.setUsername("회원2");
+            member2.setTeam(teamA);
+            em.persist(member2);
+
+            Member member3 = new Member();
+            member3.setUsername("회원3");
+            member3.setTeam(teamB);
+            em.persist(member3);
+
+//            em.flush();
+//            em.clear();
+            String query = "update Member m set m.age = 50";
+            int resultCount = em.createQuery(query).executeUpdate();
+
+            em.clear();
+            Member findMem = em.find(Member.class, member1.getId());
+
+            System.out.println("member1.age : " + findMem.getAge());
+
 
 
             ts.commit();

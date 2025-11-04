@@ -2,9 +2,15 @@ package helljpa.jpql;
 
 import jakarta.persistence.*;
 
+import java.lang.reflect.Type;
+
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity(name = "Member")
+@NamedQuery(
+         name = "Member.findByUsername",
+        query = "select m from Member m where m.username = :username"
+)
 public class Member {
 
     @Id
@@ -17,6 +23,28 @@ public class Member {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
+
+    @Embedded
+    private Address address;
+
+    @Enumerated(EnumType.STRING)
+    private MemberType memberType;
+
+    public MemberType getMemberType() {
+        return memberType;
+    }
+
+    public void setMemberType(MemberType memberType) {
+        this.memberType = memberType;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public Long getId() {
         return id;
@@ -48,5 +76,15 @@ public class Member {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                ", address=" + address +
+                '}';
     }
 }

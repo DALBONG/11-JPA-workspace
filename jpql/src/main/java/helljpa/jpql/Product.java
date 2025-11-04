@@ -13,9 +13,9 @@ public class Product {
 
     private String name;
 
-    private int price;
+    private int price; //물품금액
 
-    private int stockAmount;
+    private int stockAmount; // 재고 수량
 
     public Long getId() {
         return id;

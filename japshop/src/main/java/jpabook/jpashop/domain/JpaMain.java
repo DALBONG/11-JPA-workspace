@@ -26,6 +26,16 @@ public class JpaMain {
 
             em.persist(book);
 
+            em.flush();
+            em.clear();
+
+            String query = "select i from Item i where type(i) = Book ";
+            List<Item> resultList = em.createQuery(query, Item.class).getResultList();
+
+            for (Item item : resultList) {
+                System.out.println("book : " + item.getName() );
+            }
+
             ts.commit();
         }catch (Exception e){
             ts.rollback();

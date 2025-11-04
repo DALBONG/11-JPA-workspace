@@ -12,7 +12,7 @@ public class Order {
     @GeneratedValue
     private Long id;
 
-    private int orderAmount;
+    private int orderAmount; // 주문 수량
 
     @Embedded
     private Address address;
