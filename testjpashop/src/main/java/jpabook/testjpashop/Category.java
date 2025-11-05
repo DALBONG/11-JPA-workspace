@@ -8,9 +8,11 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter @Setter
-@JoinTable(joinColumns = @JoinColumn(name = "category_id"), )
 public class Category {
 
     @Id @GeneratedValue
@@ -19,11 +21,17 @@ public class Category {
 
     private String name;
 
+    @ManyToMany(fetch = LAZY)
+    @JoinTable(name= "category_item",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
     private List<Item> items = new ArrayList<>();
 
-    @OneToMany
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "parent_id")
     private Category parent;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
 }

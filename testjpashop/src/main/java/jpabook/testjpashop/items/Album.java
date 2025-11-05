@@ -1,10 +1,13 @@
 package jpabook.testjpashop.items;
 
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import lombok.Getter;
+import lombok.Setter;
 
-@Getter
 @DiscriminatorValue("A")
+@Entity
+@Getter @Setter
 public class Album {
 
     private String artist;
