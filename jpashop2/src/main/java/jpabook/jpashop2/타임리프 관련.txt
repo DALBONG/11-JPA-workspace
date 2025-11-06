@@ -1,0 +1,43 @@
+th:object - 폼이 어떤 객체와 연결될지 알려줌.
+  -> 해서 컨트롤러 단에 셋팅을 해줘야 함.
+     model.addAttribute("memberForm", new MemberForm());
+
+       이후, *{name}, *{city} 이런 식으로 접근 가능.
+       (멤버폼 객체를 이 폼에서 기본 객체로 쓰겠다는 뜻)
+
+th:field  - 폼 입력 값을 객체의 필드에 자동으로 연결.
+
+    ex)
+    <input type="text" th:field="*{city}" class="form-control" placeholder="도시를 입력하세요">
+    == <input type="text" id="city", name="city" class="form-control" placeholder="도시를 입력하세요">
+    이렇게 자동으로 연결해줌.
+    만약, memberForm.getName이 김달봉이면, value로 연결. 없으면 ""
+
+===================================================
+값을 잘 넣으면 문제 X, 만약 이름을 안넣으면 문제가 됨.
+해서 미리 검증하기. -> @Valid
+
+@Valid : 객체의 값들이 유효한지 검사.
+ ㄴ form객체 안의 값들이 올바른지 자동으로 체크.
+
+ "${#fields.hasErrors('name')}?
+ 바인딩 result에 담긴것이 이곳으로 자동으로 들어 감.
+
+ http 요청에서 넘어온 속성값들을 memberForm필드에 바인딩 후 그 필드들을 검증.
+
+ ==================================================
+
+ <td th:text="${member.address?.street}"></td>
+ ?연산자 : null safe 연산자.
+ - member.address가 null이 아니면 .city를 보여주고,
+                   null이면 빈칸으로 처리.
+
+ ==================================================
+ 수정 화면 Post 방식이나, action이 없음.
+  : 현재 페이지 url그대로 post요청을 보냄.
+
+
+ @ModelAttribute는 스프링에서 요청 파라미터를 자바 객체로 바꿔줌.
+
+
+
