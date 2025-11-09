@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @DiscriminatorValue("M")
-public class Main {
+public class Main extends Menu {
 
     private String pasta;
     private String pilaf;

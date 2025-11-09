@@ -9,7 +9,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @DiscriminatorValue("S")
-public class Side {
+public class Side extends Menu {
 
     private String bread;
     private String salad;

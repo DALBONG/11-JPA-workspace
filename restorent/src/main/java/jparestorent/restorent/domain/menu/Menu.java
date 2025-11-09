@@ -10,9 +10,9 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@DiscriminatorColumn(name = "DTYPE")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Menu {
+@DiscriminatorColumn(name = "DTYPE")
+public abstract class Menu {
 
     @Id @GeneratedValue
     @Column(name = "menu_id")

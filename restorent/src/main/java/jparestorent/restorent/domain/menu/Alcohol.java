@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @DiscriminatorValue("A")
-public class Alcohol {
+public class Alcohol extends Menu {
 
     private String wine;
     private String beer;
