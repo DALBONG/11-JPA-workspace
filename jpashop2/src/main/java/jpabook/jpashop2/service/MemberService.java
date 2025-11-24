@@ -1,5 +1,6 @@
 package jpabook.jpashop2.service;
 
+import jakarta.validation.constraints.NotEmpty;
 import jpabook.jpashop2.domain.Member;
 import jpabook.jpashop2.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,4 +49,12 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    @Transactional
+    public void update(Long id, @NotEmpty String name) {
+        Member member = memberRepository.findOne(id);
+        // fineOne을 통해 영속성 컨텍스트에 있는 것을 조회 함.
+        // 여기서 반환을 Member로 할 경우, DirthCheking(변경감지)가 일어나면서
+        // 커밋을 하기 때문에, 영속성 컨텍스트가 끊김.
+        member.setName(name);
+    }
 }
