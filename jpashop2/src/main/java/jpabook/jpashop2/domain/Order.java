@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
+import org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,7 +25,9 @@ public class Order {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name="member_id")
-    private Member member;
+    private Member member; //= new ByteBuddyInterceptor(member);
+    // Lazy로, 가짜 member (ProxyMember를 만듦)
+    // 지연로딩을 할 때 이러한 문제가 있음. 그렇다고 Eager로 하면 성능개선의 여지가 없음.
 
     @OneToMany(mappedBy = "order", cascade = ALL)
     private List<OrderItem> orderItems = new ArrayList<>();

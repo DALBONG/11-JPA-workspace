@@ -66,6 +66,15 @@ public class OrderRepository {
 
         return query.getResultList();
     }
+
+    public List<Order> findAllwithMemDel() {
+        List<Order> result = em.createQuery("select o from Order o"
+                        + " join fetch o.member m"
+                        + " join fetch o.delivery d", Order.class)
+                .getResultList();
+        return result;
+
+    };
     // Criteria 방식 ==================================================================
     /*public List<Order> findAllByCriteria(OrderSearch orderSearch) {
 
