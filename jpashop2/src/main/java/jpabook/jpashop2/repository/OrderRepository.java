@@ -3,13 +3,11 @@ package jpabook.jpashop2.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
-import jpabook.jpashop2.domain.Member;
 import jpabook.jpashop2.domain.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -68,13 +66,41 @@ public class OrderRepository {
     }
 
     public List<Order> findAllwithMemDel() {
-        List<Order> result = em.createQuery("select o from Order o"
+        List<Order> result = em.createQuery(
+                    "select o from Order o"
                         + " join fetch o.member m"
                         + " join fetch o.delivery d", Order.class)
                 .getResultList();
         return result;
 
     };
+
+    public List<Order> findAllwithItem() {
+        return em.createQuery(
+                "select distinct o from Order o " +
+                        "join fetch o.member m " +
+                        "join fetch o.delivery d " +
+                        "join fetch o.orderItems oi " +
+                        "join fetch oi.item i", Order.class)
+                .setFirstResult(1)
+                .setMaxResults(100)
+                .getResultList();
+                // JPQL의  DISTINCT는
+        //           db의 distinct 기능 + 엔티티의 id가 같은 것의 중복또한 제거
+    }
+
+    // 한계돌파 - ToOne의 관계를 fetch조인.
+    public List<Order> findAllwithMemDel(int offset, int limit) {
+        return em.createQuery(
+                   "select o from Order o "
+                        + "join fetch o.member m "
+                        + "join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+
     // Criteria 방식 ==================================================================
     /*public List<Order> findAllByCriteria(OrderSearch orderSearch) {
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor;
 
 import java.time.LocalDateTime;
@@ -29,8 +30,9 @@ public class Order {
     // Lazy로, 가짜 member (ProxyMember를 만듦)
     // 지연로딩을 할 때 이러한 문제가 있음. 그렇다고 Eager로 하면 성능개선의 여지가 없음.
 
+    @BatchSize(size = 40) // yml파일에 설정하지, 어노테이션에 하는 방법은 딱히 쓰지 않음.
     @OneToMany(mappedBy = "order", cascade = ALL)
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>(); // -> 컬렉션 (LIST<>)
 
 
     @OneToOne(fetch = LAZY, cascade = ALL)
