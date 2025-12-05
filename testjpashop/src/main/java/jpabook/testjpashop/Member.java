@@ -15,13 +15,14 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    //이것도
     private String name;
 
-
-    // 이거슨 테스트
+    //이것까지도
     @Embedded
     private Address address;
 
+    // 이것도 테스트고
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 }
