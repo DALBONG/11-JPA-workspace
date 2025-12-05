@@ -17,6 +17,8 @@ public class Member {
 
     private String name;
 
+
+    // 이거슨 테스트
     @Embedded
     private Address address;
 
