@@ -46,12 +46,12 @@ public class MemberService {
 
     //@Transactional(readOnly = true)
     public Member findOne(Long memberId){
-        return memberRepository.findOne(memberId);
+        return memberRepository.findById(memberId).orElse(null);
     }
 
     @Transactional
     public void update(Long id, @NotEmpty String name) {
-        Member member = memberRepository.findOne(id);
+        Member member = memberRepository.findByName(name).isEmpty() ? null : memberRepository.findById(id).orElse(null);
         // fineOne을 통해 영속성 컨텍스트에 있는 것을 조회 함.
         // 여기서 반환을 Member로 할 경우, DirthCheking(변경감지)가 일어나면서
         // 커밋을 하기 때문에, 영속성 컨텍스트가 끊김.
